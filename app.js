@@ -74,6 +74,11 @@ const typeDefs = gql`
     total: Int
   }
 
+  type FinalResult {
+    player: MatchPlayer
+    result: PlayerResult
+  }
+
   type PlayerPerMatch {
     matchNumber: Int
     result: Boolean
@@ -95,7 +100,7 @@ const typeDefs = gql`
     players: [ MatchPlayer ],
     player(id: String): MatchPlayer,
     matchResults: [Result],
-    results: String
+    results: [FinalResult]
   }
 
   type Mutation {
@@ -183,16 +188,16 @@ const resolvers = {
     results: async (_,__, {matchResults, allPlayers}) => {
       const results = await matchResults;
       const playerdata = allPlayers.reduce((obj,player)=> {
-        const {total} = getUserData(player.name,results);
-        obj[player.nickName] = total;
+        const result = getUserData(player.name,results);
+        obj.push({
+          player,
+          result: result.total
+        });
         return obj;
-      },{})
+      },[]);
       
-      let data = '';
-      const result = Object.keys(playerdata).forEach((node) => {
-        data = data + `   ${node} - ${playerdata[node].score} / ${playerdata[node].total}   `;
-      });
-      return data;
+      console.log(playerdata);
+      return playerdata;
     }
   },
   Mutation: {

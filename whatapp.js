@@ -13,21 +13,6 @@ client.on('ready', () => {
 
 client.on('message', msg => {
     console.log(msg);
-    // if (msg.body == 'hi') {
-    //   msg.reply('I Love You');
-    // }
-    // if (msg.body == 'i am sorry') {
-    //     msg.reply('no i am sorry');
-    // }
-    // if (msg.body == 'good morning') {
-    //     msg.reply('no morning is good without talking to you');
-    // }
-    // if (msg.body == 'soi pad') {
-    //     msg.reply('nahi buli jiba chala');
-    // }
-    // if (msg.body == 'missed you') {
-    //     msg.reply('i missed you more');
-    // }
 });
 
 client.initialize();
